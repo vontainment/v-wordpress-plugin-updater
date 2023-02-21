@@ -1,0 +1,2 @@
+# v-wordpress-plugin-update-api
+WordPress mu-plugin and PHP api to update plugins from your own server. The mu-plugin runs though all installed plugins and sends domain, plugin, and version. The API compares domain to a list in HOSTS file , if domain exists it checks plugins against files in /plugins format plugin-slug_1.0.0.zip and updates if a new version is available.  
