@@ -2,41 +2,11 @@
 // Check if the user is logged in
 session_start();
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    if (isset($_POST['username']) && isset($_POST['password'])) {
-        // Validate the login
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $valid_username = 'admin';
-        $valid_password = 'password';
-        if ($username === $valid_username && $password === $valid_password) {
-            $_SESSION['logged_in'] = true;
-        } else {
-            echo "Invalid username or password.";
-        }
-    } else {
-?>
-        <html>
-
-        <head>
-            <title>Login</title>
-        </head>
-
-        <body>
-            <h2>Login</h2>
-            <form method="post">
-                <label>Username:</label>
-                <input type="text" name="username"><br><br>
-                <label>Password:</label>
-                <input type="password" name="password"><br><br>
-                <input type="submit" value="Log In">
-            </form>
-        </body>
-
-        </html>
-<?php
-        exit();
-    }
+    header('Location: login.php');
+    exit();
 }
+
+// Display the content for logged in users
 ?>
 
 <html>
@@ -44,6 +14,39 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 <head>
     <title>Admin Page</title>
     <style>
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #0078D7;
+            padding: 10px;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            margin-left: -10px;
+            margin-right: -10px;
+            margin-top: -10px;
+            border-bottom-color: #2ecc71;
+            border-bottom-width: 2px;
+            border-bottom-style: solid;
+        }
+
+        .logout-btn {
+            padding: 6px 16px;
+            background-color: white;
+            color: #0078D7;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background-color: #0078D7;
+            color: white;
+        }
+
         /* Section */
         .section {
             border-width: 2px;
@@ -124,22 +127,30 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             display: inline-block;
         }
 
-        input[type=submit] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 6px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+        /* Styles for smaller screens */
+        @media (max-width: 767px) {
+            .row {
+                flex-wrap: wrap;
+            }
 
-        input[type=submit]:hover {
-            background-color: #45a049;
+            .column {
+                flex-basis: 100%;
+                margin-bottom: 20px;
+            }
+
+            input[type="submit"] {
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
         }
     </style>
 </head>
 
 <body>
+    <header>
+        <img src="logo.png" alt="Lego" width="300px" height="60px">
+        <button class="logout-btn" onclick="location.href='logout.php'">Logout</button>
+    </header>
     <div class="section">
         <h2>Hosts</h2>
         <?php
