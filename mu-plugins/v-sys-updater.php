@@ -50,17 +50,27 @@ function wp_plugin_updater_check_plugin_updates()
         // Get the installed plugin version
         $installed_version = $plugin['Version'];
 
-        // Construct the API endpoint URL
+        // Construct the API endpoint URL with the key inline
         $api_url = 'https://updates.vontainment.com/api.php';
         $api_url .= '?domain=' . urlencode(parse_url(site_url(), PHP_URL_HOST));
+        $api_url .= '&key=' . urlencode('PUTYOURSECRETKEYHERE');
         $api_url .= '&plugin=' . urlencode($plugin_slug);
         $api_url .= '&version=' . urlencode($installed_version);
 
         // Send the request to the API endpoint
-        $response = wp_remote_get($api_url);
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $api_url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSL_VERIFYPEER => false
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
 
         // Get the response body
-        $response_body = wp_remote_retrieve_body($response);
+        $response_body = $response;
 
         // Check if the API returned a plugin update
         if (!empty($response_body)) {

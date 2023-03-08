@@ -3,17 +3,19 @@
 define('HOSTS_PATH', './HOSTS');
 define('PLUGINS_PATH', './plugins');
 
-// Get the domain name, plugin slug, and plugin version from the request
+// Get the domain name, key, plugin slug, and plugin version from the request
 $domain = isset($_GET['domain']) ? $_GET['domain'] : '';
+$key = isset($_GET['key']) ? $_GET['key'] : '';
 $plugin = isset($_GET['plugin']) ? $_GET['plugin'] : '';
 $plugin_version = isset($_GET['version']) ? $_GET['version'] : '';
 
-// Check if the domain exists in the HOSTS file
+// Check if the domain and key exist in the HOSTS file
 if ($host_file = @fopen(HOSTS_PATH, 'r')) {
     while (!feof($host_file)) {
-        $host = trim(fgets($host_file));
-        if ($host === $domain) {
-            // The domain exists in the HOSTS file, so check for an updated plugin version
+        $line = trim(fgets($host_file));
+        list($host, $host_key) = explode(' ', $line);
+        if ($host === $domain && $host_key === $key) {
+            // The domain and key pair exists in the HOSTS file, so check for an updated plugin version
             $plugins = scandir(PLUGINS_PATH);
             foreach ($plugins as $filename) {
                 if (strpos($filename, $plugin) === 0) {
@@ -39,9 +41,8 @@ if ($host_file = @fopen(HOSTS_PATH, 'r')) {
     fclose($host_file);
 }
 
-// The domain does not exist in the HOSTS file, so return an empty response
+// The domain and key pair does not exist in the HOSTS file, so return an empty response
 http_response_code(204);
 header('Content-Type: application/json');
 header('Content-Length: 0');
 exit();
-?>
