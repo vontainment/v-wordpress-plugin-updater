@@ -1,4 +1,4 @@
-![Header](./your-header-image-name.png)
+![Header](./png_20230308_211110_0000.png)
 
 # v-wordpress-plugin-update-api
 WordPress MU-Plugin, PHP api and Web GUI to update plugins from your own server.
