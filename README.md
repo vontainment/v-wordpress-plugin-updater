@@ -49,8 +49,8 @@ The second section is plugins. This lets you upload plugins or delete them. As t
 ### To-Do List
 - Improve security measures
 
-- Remove webhook trigger section of the code for security purposes
+- Remove webhook trigger section of the code for security purposes (Ment for testing)
 
-- Polish GUI
+- Polish GUI ( Needs some tweaks)
 
-- Protect plugin zips
+- Protect plugin zips (Rigt now I made an htaccess file that should only get sites listed in the API hosts file to access but still testing.)
