@@ -1,4 +1,11 @@
 <?php
+/*
+WP Plugin Update API
+Version: 1.1
+Author: Vontainment
+Author URI: https://vontainment.com
+*/
+
 // Define the path to the HOSTS file and the plugins directory
 define('HOSTS_PATH', './HOSTS');
 define('PLUGINS_PATH', './plugins');

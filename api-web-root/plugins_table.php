@@ -1,48 +1,11 @@
-<style>
-    .row {
-        display: flex;
-    }
-
-    .column {
-        flex: 50%;
-        padding: 10px;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    th,
-    td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
-
-    th {
-        background-color: #f2f2f2;
-    }
-
-    form {
-        display: inline-block;
-    }
-
-    input[type=submit] {
-        background-color: #4CAF50;
-        color: white;
-        padding: 6px 12px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    input[type=submit]:hover {
-        background-color: #45a049;
-    }
-</style>
-
 <?php
+/*
+WP Plugin Update API
+Version: 1.1
+Author: Vontainment
+Author URI: https://vontainment.com
+*/
+
 $plugins_dir = "./plugins";
 $plugins = glob($plugins_dir . "/*.zip");
 if (count($plugins) > 0) {

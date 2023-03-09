@@ -1,4 +1,11 @@
 <?php
+/*
+WP Plugin Update API
+Version: 1.1
+Author: Vontainment
+Author URI: https://vontainment.com
+*/
+
 // Check if the user is logged in
 session_start();
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
@@ -6,7 +13,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         // Validate the login
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $valid_username = 'admin';
+        $valid_username = 'vontainment';
         $valid_password = 'password';
         if ($username === $valid_username && $password === $valid_password) {
             $_SESSION['logged_in'] = true;
@@ -21,72 +28,15 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         <html>
 
         <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
             <title>API Update Admin Login</title>
-            <style>
-                /* Center the form in the middle of the page */
-                body {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    height: 100vh;
-                }
-
-                /* Style the box around the form */
-                .login-box {
-                    width: 400px;
-                    padding: 20px;
-                    border: 2px solid #2ecc71;
-                    border-radius: 5px;
-                    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.47);
-                    text-align: center;
-                }
-
-                .login-box form {
-                    text-align: left;
-                }
-
-                input[type="text"] {
-                    width: 100%;
-                    padding: 5px;
-                    border-radius: 5px;
-                    border: 1px solid #ccc;
-                    box-sizing: border-box;
-                }
-
-                input[type="password"] {
-                    width: 100%;
-                    padding: 5px;
-                    border-radius: 5px;
-                    border: 1px solid #ccc;
-                    box-sizing: border-box;
-                }
-
-                input[type="submit"] {
-                    background-color: #4CAF50;
-                    color: white;
-                    padding: 8px 20px;
-                    border: none;
-                    border-radius: 5px;
-                    cursor: pointer;
-                }
-
-                input[type="submit"]:hover {
-                    background-color: #3e8e41;
-                }
-
-                /* Style the logo */
-                .logo {
-                    width: 300px;
-                    height: 60px;
-                    margin-bottom: 20px;
-                }
-            </style>
+            <link rel="stylesheet" href="./static/css/login.css">
         </head>
 
         <body>
             <div class="login-box">
-                <img src="logo.png" alt="Logo" class="logo">
+                <img src="./static/img/logo.png" alt="Logo" class="logo">
                 <h2>Login</h2>
                 <form method="post">
                     <label>Username:</label>

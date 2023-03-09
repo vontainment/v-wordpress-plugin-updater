@@ -51,7 +51,7 @@ function wp_plugin_updater_check_plugin_updates()
         $installed_version = $plugin['Version'];
 
         // Construct the API endpoint URL with the key inline
-        $api_url = 'https://updates.vontainment.com/api.php';
+        $api_url = 'https://.vontainment.com/wp-update/api.php';
         $api_url .= '?domain=' . urlencode(parse_url(site_url(), PHP_URL_HOST));
         $api_url .= '&key=' . urlencode('PUTYOURSECRETKEYHERE');
         $api_url .= '&plugin=' . urlencode($plugin_slug);

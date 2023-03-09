@@ -1,4 +1,11 @@
 <?php
+/*
+WP Plugin Update API
+Version: 1.1
+Author: Vontainment
+Author URI: https://vontainment.com
+*/
+
 // Check if the user is logged in
 session_start();
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
@@ -12,143 +19,15 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 <html>
 
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Admin Page</title>
-    <style>
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #0078D7;
-            padding: 10px;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            margin-left: -10px;
-            margin-right: -10px;
-            margin-top: -10px;
-            border-bottom-color: #2ecc71;
-            border-bottom-width: 2px;
-            border-bottom-style: solid;
-        }
-
-        .logout-btn {
-            padding: 6px 16px;
-            background-color: white;
-            color: #0078D7;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .logout-btn:hover {
-            background-color: #0078D7;
-            color: white;
-        }
-
-        /* Section */
-        .section {
-            border-width: 2px;
-            border-color: #2ecc71;
-            border-style: solid;
-            margin-right: 20px;
-            margin-left: 20px;
-            margin-top: 40px;
-            margin-bottom: 40px;
-            padding-left: 20px;
-            padding-right: 20px;
-            padding-top: 0px;
-        }
-
-        /* Section */
-        .section .section {
-            max-width: 400px;
-        }
-
-
-        .form-group {
-            margin-bottom: 10px;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 5px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 8px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #3e8e41;
-        }
-
-        .row {
-            display: flex;
-        }
-
-        .column {
-            flex: 50%;
-            padding: 10px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        form {
-            display: inline-block;
-        }
-
-        /* Styles for smaller screens */
-        @media (max-width: 767px) {
-            .row {
-                flex-wrap: wrap;
-            }
-
-            .column {
-                flex-basis: 100%;
-                margin-bottom: 20px;
-            }
-
-            input[type="submit"] {
-                margin-top: 5px;
-                margin-bottom: 5px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="./static/css/index.css">
 </head>
 
 <body>
     <header>
-        <img src="logo.png" alt="Lego" width="300px" height="60px">
+        <img src="./static/img/logo.png" alt="Lego" width="300px" height="60px">
         <button class="logout-btn" onclick="location.href='logout.php'">Logout</button>
     </header>
     <div class="section">
