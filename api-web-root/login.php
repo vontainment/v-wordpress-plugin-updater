@@ -37,7 +37,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         <body>
             <div class="login-box">
                 <img src="./static/img/logo.png" alt="Logo" class="logo">
-                <h2>Login</h2>
+                <h2>API Admin Login</h2>
                 <form method="post">
                     <label>Username:</label>
                     <input type="text" name="username"><br><br>

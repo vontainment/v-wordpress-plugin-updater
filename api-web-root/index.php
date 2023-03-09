@@ -21,7 +21,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Admin Page</title>
+    <title>API Admin Page</title>
     <link rel="stylesheet" href="./static/css/index.css">
 </head>
 
@@ -31,7 +31,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         <button class="logout-btn" onclick="location.href='logout.php'">Logout</button>
     </header>
     <div class="section">
-        <h2>Hosts</h2>
+        <h2>Allowed Hosts</h2>
         <?php
         // Check if an entry was updated
         if (isset($_POST['update'])) {
