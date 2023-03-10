@@ -102,10 +102,10 @@ function wp_plugin_updater_check_plugin_updates()
                 } else {
                     // Delete the plugin zip file
                     unlink($plugin_zip_file);
-                    error_log("$plugin_slug updated");
+                    error_log("$plugin_slug : Was updated");
                 }
             } else {
-                error_log("$plugin_slug : has no updates");
+                error_log("$plugin_slug : Is up-to-date");
             }
         }
     }
