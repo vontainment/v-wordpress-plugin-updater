@@ -30,6 +30,9 @@ But most of all it's just much easier than any other option. You don't need to c
 - Upload the api-web-root directories contents to your webserver. Open index.php and set username and password.
 
 
+## Change Log
+3/10/23: Added download.php. This is the beginning of implementing security. The point will be to move the hosts file and the plugin directory outside of the webroot and have downloaded.php route the file requests after validating with the hosts file.
+
 ## WordPress mu-plugin, PHP API and Web GUI for Updating Plugins
 This is a WordPress mu-plugin (must-use plugin) along with a PHP API and Web GUI that allows you to update your WordPress plugins from your own server. The mu-plugin iterates through all installed plugins and sends the domain, plugin, and version to the API.
 
