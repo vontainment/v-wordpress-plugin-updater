@@ -3,7 +3,7 @@
 Plugin Name: WP Plugin Updater
 Plugin URI: https://vontainment.com
 Description: This plugin updates your WordPress plugins.
-Version: 1.1
+Version: 1.0.0
 Author: Vontainment
 Author URI: https://vontainment.com
 */
