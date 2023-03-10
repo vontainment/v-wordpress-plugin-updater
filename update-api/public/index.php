@@ -59,7 +59,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             $domain = $_POST['domain'];
             $key = $_POST['key'];
             $new_entry = $domain . ' ' . $key;
-            file_put_contents($hosts_file, $new_entry . "\n", FILE_APPEND);
+            file_put_contents($hosts_file, "\n" . $new_entry, FILE_APPEND | LOCK_EX);
         }
 
         // Display the table of entries
