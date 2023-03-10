@@ -27,7 +27,17 @@ But most of all it's just much easier than any other option. You don't need to c
 - Set api.php url in the file.
 
 ### To Install On Server
-- Upload the api-web-root directories contents to your webserver. Open index.php and set username and password.
+- Upload the update-api drectorie contents to your webservers webroot.
+- Change webroot to the /public/ directory.
+- Open index.php and set username and password.
+
+### Manage Update API
+- Login to WebGUI at yourdomain.com/
+- Add websites domain in format domain.com.
+- Add websites security key that you used in mu-plugin.
+- Prepare updates by renaiming the plugin zip file to plugin-slug_1.1.1.zip (pay attention to the formatting. First is the plug-in slug followed by an _ then the version.
+- Delete any previous versions of plugging updates.
+- Sites will update once daily.
 
 
 ## Change Log
