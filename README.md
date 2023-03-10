@@ -47,9 +47,13 @@ But most of all it's just much easier than any other option. You don't need to c
 
 ### WordPress mu-plugin, PHP API and Web GUI for Updating Plugins
 
-This is a WordPress mu-plugin (must-use plugin) along with a PHP API and Web GUI that allows you to update your WordPress plugins from your own server. The mu-plugin iterates through all installed plugins and sends the domain, plugin, and version to the API.
+This is a WordPress mu-plugin (must-use plugin) along with a PHP API and Web GUI that allows you to update your WordPress plugins from your own server. 
 
-The API compares the domain to a list in the HOSTS file. If the domain exists, it checks the plugins against files in the /plugins format, for example, `plugin-slug_1.0.0.zip`, and updates them if a new version is available. We have also added a web admin to the API for better user experience.
+The mu-plugin iterates through all installed plugins and sends the domain, security key, plugin slug and version to the API.
+
+The API compares the domain and key to a list in the HOSTS file. If the domain exists and the key matches, it checks the plugins against files in the /plugins directory, for example, `plugin-slug_1.0.0.zip`. If a new version is available the API sends the filename to the mu-plugin which in return sends a request to downloads.php with the domain, security key and plugin file. The download.php file grabs the plugin file from outside the webroot (for security) and passes it to the mu-plugin to be updated.
+
+We have also added a web admin to the API for better user experience. Add, remove or edit domains and security keys. As well as upload and delete plugin file.
 
 
 
