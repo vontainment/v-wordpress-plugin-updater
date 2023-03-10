@@ -23,6 +23,7 @@ But most of all it's just much easier than any other option. You don't need to c
 ## What Is New
 - Added web admin to api
 - Changed wpgetremote to curl
+- secure HOSTS and Plugins outside webroot
 
 
 ## To Install
@@ -32,6 +33,7 @@ But most of all it's just much easier than any other option. You don't need to c
 
 ## Change Log
 3/10/23: Added download.php. This is the beginning of implementing security. The point will be to move the hosts file and the plugin directory outside of the webroot and have downloaded.php route the file requests after validating with the hosts file.
+
 
 ## WordPress mu-plugin, PHP API and Web GUI for Updating Plugins
 This is a WordPress mu-plugin (must-use plugin) along with a PHP API and Web GUI that allows you to update your WordPress plugins from your own server. The mu-plugin iterates through all installed plugins and sends the domain, plugin, and version to the API.
@@ -50,10 +52,4 @@ The second section is plugins. This lets you upload plugins or delete them. As t
 
 
 ### To-Do List
-- Improve security measures
-
-- Remove webhook trigger section of the code for security purposes (Ment for testing)
-
 - Polish GUI ( Needs some tweaks)
-
-- Protect plugin zips (Rigt now I made an htaccess file that should only get sites listed in the API hosts file to access but still testing.)

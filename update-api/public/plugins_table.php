@@ -6,7 +6,7 @@ Author: Vontainment
 Author URI: https://vontainment.com
 */
 
-$plugins_dir = "./plugins";
+$plugins_dir = "../plugins";
 $plugins = glob($plugins_dir . "/*.zip");
 if (count($plugins) > 0) {
     echo '<div class="row"><div class="column">
