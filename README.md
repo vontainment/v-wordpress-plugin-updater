@@ -67,10 +67,18 @@ The second section is plugins. This lets you upload plugins or delete them. As t
 ## Project Status
 
 ### Change Log
-3/10/23: Added download.php. This is the beginning of implementing security. The point will be to move the hosts file and the plugin directory outside of the webroot and have downloaded.php route the file requests after validating with the hosts file.
-
-- Added a config.php for variables in the api.
+3/10/23:
+- Added download.php. This file handles sending the download to the plugin. This way the plugin directory can be outside the webroot and secure.
+- Added a config.php for variables in the api. It will be located outside webroot.
+- Moved HOSTS file out of webroot.
 
 
 ### To-Do List
+
 - Polish GUI ( Needs some tweaks)
+- Need to make it more efficient and limit the request sent back and forth.
+- Maybe add themes and mu-plugin updates.
+- Right now it logs everything to the debug log in WordPress. Would like to maybe set up its unlocking system that can be viewed from the admin.
+- Move plugin variables to WordPress config
+
+
