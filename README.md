@@ -13,7 +13,10 @@ The API compares the domain and key to a list in the HOSTS file. If the domain e
 
 We have also added a web admin to the API for better user experience. Add, remove or edit domains and security keys. As well as upload and delete plugin file.
 
+You can customize the GUI by editing the CSS in the static folder and by swapping out the logo image.
+
 ![Login](./screenshot.jpg?raw=true "Login")
+
 
 ## Who This Is For
 There are several great usage cases for this system. Our self-hosted API/Web GUI + MU-Plugin offering unique way of updating WordPress plugins without using the official repository.
