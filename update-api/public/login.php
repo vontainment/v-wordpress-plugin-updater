@@ -6,6 +6,9 @@ Author: Vontainment
 Author URI: https://vontainment.com
 */
 
+// Include the config file
+require_once '../config.php';
+
 // Check if the user is logged in
 session_start();
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
@@ -13,23 +16,23 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         // Validate the login
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $valid_username = 'vontainment';
-        $valid_password = 'password';
-        if ($username === $valid_username && $password === $valid_password) {
+        if ($username === VALID_USERNAME && $password === VALID_PASSWORD) {
             $_SESSION['logged_in'] = true;
             header('Location: index.php');
             exit();
         } else {
-            echo "Invalid username or password.";
+            $error_msg = "Invalid username or password.";
         }
-    } else {
+    }
 ?>
 
-        <html>
+        <!DOCTYPE html>
+        <html lang="en-US">
 
         <head>
-            <meta charset="UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="robots" content="noindex, nofollow">
             <title>API Update Admin Login</title>
             <link rel="stylesheet" href="./static/css/login.css">
         </head>
@@ -45,15 +48,16 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                     <input type="password" name="password"><br><br>
                     <input type="submit" value="Log In">
                 </form>
+                <?php if (isset($error_msg)) : ?>
+                    <div id="error-msg"><?php echo $error_msg; ?></div>
+                <?php endif; ?>
             </div>
         </body>
 
         </html>
 <?php
-    }
 } else {
     // User is already logged in, redirect them to the homepage
     header('Location: index.php');
     exit();
 }
-?>

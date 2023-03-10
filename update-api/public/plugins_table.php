@@ -6,7 +6,11 @@ Author: Vontainment
 Author URI: https://vontainment.com
 */
 
-$plugins_dir = "../plugins";
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
+$plugins_dir = PLUGIN_DIR;
 $plugins = glob($plugins_dir . "/*.zip");
 if (count($plugins) > 0) {
     echo '<div class="row"><div class="column">

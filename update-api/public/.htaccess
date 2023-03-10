@@ -1,4 +1,0 @@
-<Files "plugins_table.php">
-  Order Allow,Deny
-  Deny from all
-</Files>

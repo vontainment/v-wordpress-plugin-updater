@@ -13,14 +13,19 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     exit();
 }
 
+// Include the config file
+require_once ('../config.php');
+
 // Display the content for logged in users
 ?>
 
-<html>
+<!DOCTYPE html>
+<html lang="en-US">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
     <title>API Admin Page</title>
     <link rel="stylesheet" href="./static/css/index.css">
 </head>
@@ -35,7 +40,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         <?php
         // Check if an entry was updated
         if (isset($_POST['update'])) {
-            $hosts_file = '.../HOSTS';
+            $hosts_file = HOSTS_ACL;
             $entries = file($hosts_file, FILE_IGNORE_NEW_LINES);
             $line_number = $_POST['id'];
             $domain = $_POST['domain'];
@@ -46,7 +51,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
         // Check if an entry was deleted
         if (isset($_POST['delete'])) {
-            $hosts_file = '../HOSTS';
+            $hosts_file = HOSTS_ACL;
             $entries = file($hosts_file, FILE_IGNORE_NEW_LINES);
             $line_number = $_POST['id'];
             unset($entries[$line_number]);
@@ -55,7 +60,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
         // Check if a new entry was added
         if (isset($_POST['add'])) {
-            $hosts_file = '../HOSTS';
+            $hosts_file = HOSTS_ACL;
             $domain = $_POST['domain'];
             $key = $_POST['key'];
             $new_entry = $domain . ' ' . $key;
@@ -63,7 +68,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         }
 
         // Display the table of entries
-        $hosts_file = '../HOSTS';
+        $hosts_file = HOSTS_ACL;
         $entries = file($hosts_file, FILE_IGNORE_NEW_LINES);
         ?>
         <div class="row">
@@ -187,7 +192,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                 $allowed_extensions = array('zip');
                 $upload_file = $_FILES['plugin_file'];
 
-                $upload_dir = '../plugins/';
+                $upload_dir = PLUGINS_DIR;
 
                 $file_name = basename($upload_file['name']);
                 $file_extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
@@ -213,7 +218,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_plugin'])) {
                 $plugin_name = $_POST['plugin_name'];
-                $plugin_path = '../plugins/' . $plugin_name;
+                $plugin_path = PLUGINS_DIR . $plugin_name;
 
                 if (file_exists($plugin_path)) {
                     unlink($plugin_path);

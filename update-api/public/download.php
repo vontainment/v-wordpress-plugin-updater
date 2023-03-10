@@ -6,9 +6,8 @@
  * Author URI: https://vontainment.com
  */
 
-// Define the path to the HOSTS file and the plugins directory
-define('HOSTS_PATH', '../HOSTS');
-define('PLUGINS_PATH', '../plugins');
+// Include the config file
+require_once ('../config.php');
 
 // Get the domain, key, and file from the query string
 $domain = isset($_GET['domain']) ? $_GET['domain'] : '';
@@ -17,7 +16,7 @@ $file = isset($_GET['file']) ? $_GET['file'] : '';
 
 // Validate the domain and key against the HOSTS file
 $allowed = false;
-if ($handle = fopen(HOSTS_PATH, 'r')) {
+if ($handle = fopen(HOSTS_ACL, 'r')) {
     while (($line = fgets($handle)) !== false) {
         $line = trim($line);
         if (!empty($line)) {
@@ -33,7 +32,7 @@ if ($handle = fopen(HOSTS_PATH, 'r')) {
 
 // If the domain and key are valid, send the file for download
 if ($allowed) {
-    $file_path = PLUGINS_PATH . '/' . $file;
+    $file_path = PLUGINS_DIR . '/' . $file;
     if (file_exists($file_path)) {
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename="' . basename($file_path) . '"');

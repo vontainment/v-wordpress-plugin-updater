@@ -45,7 +45,7 @@ But most of all it's just much easier than any other option. You don't need to c
 ### To Install On Server
 - Upload the update-api drectorie contents to your webservers webroot.
 - Change webroot to the /public/ directory.
-- Open index.php and set username and password.
+- Open config.php and set username and password.
 
 ### Manage Update API
 - Login to WebGUI at yourdomain.com/
@@ -68,6 +68,8 @@ The second section is plugins. This lets you upload plugins or delete them. As t
 
 ### Change Log
 3/10/23: Added download.php. This is the beginning of implementing security. The point will be to move the hosts file and the plugin directory outside of the webroot and have downloaded.php route the file requests after validating with the hosts file.
+
+- Added a config.php for variables in the api.
 
 
 ### To-Do List

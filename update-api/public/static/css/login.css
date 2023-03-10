@@ -59,6 +59,12 @@
      background-color: #3e8e41;
  }
 
+ #error-msg {
+     color: #ff0000;
+     padding: 10px;
+     margin-bottom: 10px;
+ }
+
  /* Style the logo */
  .logo {
      width: 300px;
