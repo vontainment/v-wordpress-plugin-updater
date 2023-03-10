@@ -50,7 +50,7 @@ function wp_plugin_updater_check_plugin_updates()
     // Loop through each installed plugin and check for updates
     foreach ($plugins as $plugin_path => $plugin) {
         // Get the plugin slug
-        $plugin_slug = basename($plugin_path, '.php');
+        $plugin_slug       = basename($plugin_path, '.php');
         // Get the installed plugin version
         $installed_version = $plugin['Version'];
 
@@ -66,7 +66,7 @@ function wp_plugin_updater_check_plugin_updates()
             CURLOPT_SSL_VERIFYHOST => false,
             CURLOPT_SSL_VERIFYPEER => false
         ));
-        $response = curl_exec($curl);
+        $response  = curl_exec($curl);
         $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
 
@@ -84,22 +84,24 @@ function wp_plugin_updater_check_plugin_updates()
             if (isset($response_data['zip_url'])) {
                 $download_url = $response_data['zip_url'];
 
-                // Download the zip file to the plugins directory
-                require_once ABSPATH . 'wp-admin/includes/file.php';
-                WP_Filesystem();
-                global $wp_filesystem;
-                $download_path = WP_PLUGIN_DIR . '/' . basename($download_url);
-                $wp_filesystem->put_contents($download_path, fopen($download_url, 'r'));
+                // Download the zip file to the upload directory
+                $upload_dir      = wp_upload_dir();
+                $tmp_file        = download_url($download_url);
+                $plugin_zip_file = $upload_dir['path'] . '/' . basename($download_url);
+
+                // Move the downloaded file to the plugins directory
+                rename($tmp_file, $plugin_zip_file);
 
                 // Unzip the plugin zip file
-                $unzipfile = unzip_file($download_path, WP_PLUGIN_DIR);
+                WP_Filesystem();
+                $unzipfile = unzip_file($plugin_zip_file, WP_PLUGIN_DIR);
 
                 // Check if the unzip was successful
                 if (is_wp_error($unzipfile)) {
-                    error_log('Error unzipping file: ' . $unzipfile->get_error_message());
+                    error_log('Error unzipping plugin file: ' . $unzipfile->get_error_message());
                 } else {
                     // Delete the plugin zip file
-                    unlink($download_path);
+                    unlink($plugin_zip_file);
                     error_log("$plugin_slug updated");
                 }
             } else {
