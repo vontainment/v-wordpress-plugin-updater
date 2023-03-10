@@ -5,7 +5,7 @@ WordPress MU-Plugin, PHP api and Web GUI to update plugins from your own server.
 
 
 ## What This Is
-This is a WordPress mu-plugin (must-use plugin) along with a PHP API and Web GUI that allows you to update your WordPress plugins from your own server. 
+This is a WordPress mu-plugin (must-use plugin) along with a PHP API and Web GUI that allows you to update your WordPress plugins from your own server.
 
 The mu-plugin iterates through all installed plugins and sends the domain, security key, plugin slug and version to the API.
 
@@ -13,7 +13,7 @@ The API compares the domain and key to a list in the HOSTS file. If the domain e
 
 We have also added a web admin to the API for better user experience. Add, remove or edit domains and security keys. As well as upload and delete plugin file.
 
-![Login](./Screenshot_20230308_205623_Chrome.jpg?raw=true "Login")
+![Login](./screenshot.jpg?raw=true "Login")
 
 ## Who This Is For
 There are several great usage cases for this system. Our self-hosted API/Web GUI + MU-Plugin offering unique way of updating WordPress plugins without using the official repository.
@@ -36,7 +36,7 @@ But most of all it's just much easier than any other option. You don't need to c
 ### To Install In WP
 
 - Drop in the MU-Plugin from the MU-Plugin directory to your sites.
-- Set a key for security in the file. 
+- Set a key for security in the file.
 - Set api.php url in the file.
 
 ### To Install On Server
@@ -69,6 +69,3 @@ The second section is plugins. This lets you upload plugins or delete them. As t
 
 ### To-Do List
 - Polish GUI ( Needs some tweaks)
-
-
-
