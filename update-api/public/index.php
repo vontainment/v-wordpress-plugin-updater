@@ -167,120 +167,77 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         <div id="plugins_table">
             <?php include('plugins-table.php'); ?>
         </div>
-    </div>
 
-    <div class="section">
-        <h2>Upload Plugin</h2>
-        <?php
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['plugin_file'])) {
-            $allowed_extensions = array('zip');
-            $upload_file = $_FILES['plugin_file'];
-
-            $upload_dir = '../plugins/';
-
-            $file_name = basename($upload_file['name']);
-            $file_extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-
-            if (!in_array($file_extension, $allowed_extensions)) {
-                echo '<p class="error">Invalid file format. Please upload a ZIP file.</p>';
-            } else {
-                $file_path = $upload_dir . $file_name;
-
-                if (file_exists($file_path)) {
-                    echo '<p class="error">File already exists.</p>';
-                } else {
-                    if (move_uploaded_file($upload_file['tmp_name'], $file_path)) {
-                        echo '<p class="success">File uploaded successfully.</p>';
-                        // Call the function to update the plugins table
-                        echo '<script>updatePluginsTable();</script>';
-                    } else {
-                        echo '<p class="error">Error uploading file.</p>';
-                    }
-                }
-            }
-        }
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_plugin'])) {
-            $plugin_name = $_POST['plugin_name'];
-            $plugin_path = '../plugins/' . $plugin_name;
-
-            if (file_exists($plugin_path)) {
-                unlink($plugin_path);
-                echo '<p class="success">Plugin deleted successfully.</p>';
-                // Call the function to update the plugins table
-                echo '<script>updatePluginsTable();</script>';
-            } else {
-                echo '<p class="error">Plugin not found.</p>';
-            }
-        }
-        ?>
-        <form method="post" enctype="multipart/form-data">
-            <input type="file" name="plugin_file">
-            <input type="submit" name="upload_plugin" value="Upload">
-        </form>
-    </div>
-
-    <script>
-        function updatePluginsTable() {
-            $.ajax({
-                url: 'plugins-table.php',
-                success: function(data) {
-                    $('#plugins_table').html(data);
-                },
-                error: function() {
-                    $('#plugins_table').html('<p>Error loading plugins table.</p>');
-                }
-            });
-        }
-
-        $(document).ready(function() {
-
-            updatePluginsTable();
-
-            $('form[name="delete_plugin_form"]').submit(function(event) {
-                event.preventDefault();
-                var form = $(this);
+        <div class="section">
+            <h2>Upload Plugin</h2>
+            <form method="post" enctype="multipart/form-data" name="upload_plugin_form" action="upload-plugin.php">
+                <input type="file" name="plugin_file">
+                <input type="submit" name="upload_plugin" value="Upload">
+            </form>
+            <div id="message"></div>
+        </div>
+        <script>
+            function updatePluginsTable() {
                 $.ajax({
-                    url: form.attr('action'),
-                    type: form.attr('method'),
-                    data: form.serialize(),
+                    url: 'plugins-table.php',
                     success: function(data) {
-                        $('#message').html(data);
-                        updatePluginsTable();
+                        $('#plugins_table').html(data);
                     },
                     error: function() {
-                        $('#message').html('<p>Error deleting plugin.</p>');
+                        $('#plugins_table').html('<p>Error loading plugins table.</p>');
                     }
                 });
-                event.stopPropagation(); // Prevent any other event handlers from executing
-                return false; // Prevent default form submission behavior
-            });
+            }
 
+            $(document).ready(function() {
 
-            $('form[name="upload_plugin_form"]').submit(function(event) {
-                event.preventDefault();
-                var form = $(this);
-                var formData = new FormData(form[0]);
-                $.ajax({
-                    url: form.attr('action'),
-                    type: form.attr('method'),
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function(data) {
-                        $('#message').html(data);
-                        updatePluginsTable();
-                    },
-                    error: function() {
-                        $('#message').html('<p>Error uploading plugin.</p>');
-                    }
+                updatePluginsTable();
+
+                $('form[name="delete_plugin_form"]').submit(function(event) {
+                    event.preventDefault();
+                    var form = $(this);
+                    $.ajax({
+                        url: form.attr('action'),
+                        type: form.attr('method'),
+                        data: form.serialize(),
+                        success: function(data) {
+                            $('#message').html(data);
+                            updatePluginsTable();
+                        },
+                        error: function() {
+                            $('#message').html('<p>Error deleting plugin.</p>');
+                        }
+                    });
+                    event.stopPropagation(); // Prevent any other event handlers from executing
+                    return false; // Prevent default form submission behavior
                 });
-                event.stopPropagation(); // Prevent any other event handlers from executing
-                return false; // Prevent default form submission behavior
+
+
+                $('form[name="upload_plugin_form"]').submit(function(event) {
+                    event.preventDefault();
+                    var form = $(this);
+                    var formData = new FormData(form[0]);
+                    $.ajax({
+                        url: form.attr('action'),
+                        type: form.attr('method'),
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function(data) {
+                            $('#message').html(data);
+                            updatePluginsTable();
+                        },
+                        error: function() {
+                            $('#message').html('<p>Error uploading plugin.</p>');
+                        }
+                    });
+                    event.stopPropagation(); // Prevent any other event handlers from executing
+                    return false; // Prevent default form submission behavior
+                });
             });
-        });
-    </script>
+        </script>
+
 </body>
 
 </html>
