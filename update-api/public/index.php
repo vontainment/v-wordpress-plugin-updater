@@ -163,7 +163,7 @@ Author URI: https://vontainment.com
 
         <div class="section">
             <h2>Upload Plugin</h2>
-            <form method="post" enctype="multipart/form-data" name="upload_plugin_form" action="upload-plugin.php">
+            <form method="post" enctype="multipart/form-data" name="upload_plugin_form" action="../upload-plugin.php">
                 <input type="file" name="plugin_file">
                 <input type="submit" name="upload_plugin" value="Upload">
             </form>

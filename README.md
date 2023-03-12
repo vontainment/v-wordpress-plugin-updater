@@ -35,6 +35,7 @@ But most of all it's just much easier than any other option. You don't need to c
 
 
 ## Getting Started
+- This requires php setting allow_url_fopen enabled
 
 ### To Install In WP
 
