@@ -1,15 +1,7 @@
 <?php
 
-session_start();
-
-// Check if user is logged in
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: login.php");
-    exit;
-}
-
 // Define plugins directory
-$plugins_dir = "../plugins";
+$plugins_dir = "./plugins";
 
 // Check if delete plugin form was submitted
 if (isset($_POST['delete_plugin'])) {

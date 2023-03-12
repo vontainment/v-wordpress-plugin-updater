@@ -6,13 +6,6 @@ Author: Vontainment
 Author URI: https://vontainment.com
 */
 
-// Check if the user is logged in
-session_start();
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header('Location: login.php');
-    exit();
-}
-
 // Display the content for logged in users
 ?>
 
@@ -62,7 +55,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             $domain = $_POST['domain'];
             $key = $_POST['key'];
             $new_entry = $domain . ' ' . $key;
-            file_put_contents($hosts_file, "\n" . $new_entry, FILE_APPEND | LOCK_EX);
+            file_put_contents($hosts_file, $new_entry . "\n", FILE_APPEND | LOCK_EX);
         }
 
         // Display the table of entries
@@ -165,7 +158,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     <div class="section">
         <h2>Plugins</h2>
         <div id="plugins_table">
-            <?php include('plugins-table.php'); ?>
+            <?php include('../plugins-table.php'); ?>
         </div>
 
         <div class="section">
@@ -179,7 +172,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         <script>
             function updatePluginsTable() {
                 $.ajax({
-                    url: 'plugins-table.php',
+                    url: '../plugins-table.php',
                     success: function(data) {
                         $('#plugins_table').html(data);
                     },
@@ -237,7 +230,13 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                 });
             });
         </script>
-
+    </div>
+    <div class="section">
+        <h2>Access Logs</h2>
+        <div class="log-box">
+            <?php include '../log-status.php'; ?>
+        </div>
+    </div>
 </body>
 
 </html>

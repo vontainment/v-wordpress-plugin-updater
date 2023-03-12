@@ -1,15 +1,13 @@
-/* Global styles */
 body {
   max-width: 100%;
   overflow-x: hidden;
   background-color: #f1f1f1;
   background-image: url("../img/background.png");
   background-repeat: repeat;
-  margin: 0 0 40px 0;
+  margin: 0;
   font-size: 16px;
 }
 
-/* Header */
 header {
   display: flex;
   align-items: center;
@@ -38,7 +36,6 @@ header {
   color: white;
 }
 
-/* Section */
 .section {
   background-color: #ffffff;
   border: 2px solid #2ecc71;
@@ -51,6 +48,42 @@ header {
   border: 2px solid #2ecc71;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   max-width: 400px;
+}
+
+.log-box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.log-columns {
+  margin: 10px;
+  padding: 10px;
+  font-size: 18px;
+  min-width: 17.8%;
+}
+
+.log-sub-box {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  border: 2px solid #2ecc71;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.log-entry {
+  font-size: 16px;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+  padding: 10px;
 }
 
 /* Form */
@@ -87,16 +120,6 @@ input[type="submit"]:hover {
   box-shadow: rgba(0, 0, 0, 0.07) 1.5px 1.5px 2.2px;
 }
 
-/* Grid */
-.row {
-  display: flex;
-}
-
-.column {
-  flex: 50%;
-  padding: 10px;
-}
-
 /* Table */
 table {
   width: 100%;
@@ -113,6 +136,7 @@ td {
 th {
   background-color: #f2f2f2;
 }
+
 /* For screens up to 767px wide */
 
 /* Styles for smaller screens */
@@ -123,16 +147,12 @@ th {
 
   .section {
     border: 2px solid #ffffff;
-    margin: 0px;
+    margin: 0 0 39px 0;
     padding: 0 20px;
   }
 
-  thead > tr th:nth-child(3) {
-    width: 80px;
-  }
-
-  #plugins-table-wrapper thead > tr th:nth-child(2) {
-    width: 80px;
+  .log-columns {
+    width: 100%;
   }
 
   .row {
@@ -148,6 +168,10 @@ th {
 
   .logout-btn {
     margin: 10px 0 10px auto;
+  }
+
+  thead > tr th:nth-child(3) {
+    width: 80px;
   }
 
   input[type="submit"] {

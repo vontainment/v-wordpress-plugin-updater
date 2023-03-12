@@ -16,7 +16,7 @@ if ($_FILES['plugin_file']['error'] !== UPLOAD_ERR_OK) {
 } elseif (!in_array($file_extension, $allowed_extensions)) {
     echo '<p class="error">Invalid file type. Only .zip files are allowed.</p>';
 } else {
-    $plugin_path = '../plugins/' . $_FILES['plugin_file']['name'];
+    $plugin_path = './plugins/' . $_FILES['plugin_file']['name'];
     if (file_exists($plugin_path)) {
         echo '<p class="error">File already exists.</p>';
     } else {
