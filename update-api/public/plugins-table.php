@@ -53,7 +53,7 @@ if (count($plugins) > 0) {
             $table_html .= '<tr>
             <td>' . $plugin_name . '</td>
             <td>
-                <form method="post" name="delete_plugin_form" action="">
+                <form method="post" name="delete_plugin_form" action="index.php#delete">
                     <input type="hidden" name="plugin_name" value="' . $plugin . '">
                     <input type="submit" name="delete_plugin" value="Delete">
                 </form>
@@ -77,7 +77,7 @@ if (count($plugins) > 0) {
             $table_html .= '<tr>
             <td>' . $plugin_name . '</td>
             <td>
-                <form method="post" name="delete_plugin_form" action="">
+                <form method="post" name="delete_plugin_form" action="index.php#delete">
                     <input type="hidden" name="plugin_name" value="' . $plugin . '">
                     <input type="submit" name="delete_plugin" value="Delete">
                 </form>
@@ -93,8 +93,3 @@ if (count($plugins) > 0) {
 
 // Output table HTML
 echo $table_html;
-
-// Output message if exists
-if (isset($message)) {
-    echo "<p>$message</p>";
-}

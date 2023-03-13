@@ -34,7 +34,7 @@ if ($host_file = @fopen(HOSTS_ACL, 'r')) {
                         $zip_url = 'http://' . $_SERVER['HTTP_HOST'] . '/download.php?domain=' . $domain . '&key=' . $key . '&file=' . $filename;
                         header('Content-Type: application/json');
                         echo json_encode(['zip_url' => $zip_url]);
-                        $log_message = $domain . ' ' . date('Y-m-d, h:i:sa') . ' Successful';
+                        $log_message = $domain . ' ' . date('Y-m-d,h:i:sa') . ' Successful';
                         file_put_contents('../accesslog.log', $log_message . PHP_EOL, LOCK_EX | FILE_APPEND);
                         exit();
                     }
@@ -44,7 +44,7 @@ if ($host_file = @fopen(HOSTS_ACL, 'r')) {
             http_response_code(204);
             header('Content-Type: application/json');
             header('Content-Length: 0');
-            $log_message = $domain . ' ' . date('Y-m-d, h:i:sa') . ' Successful';
+            $log_message = $domain . ' ' . date('Y-m-d,h:i:sa') . ' Successful';
             file_put_contents('../accesslog.log', $log_message . PHP_EOL, LOCK_EX | FILE_APPEND);
             exit();
         }
@@ -56,6 +56,6 @@ if ($host_file = @fopen(HOSTS_ACL, 'r')) {
 header('HTTP/1.1 401 Unauthorized');
 echo 'Unauthorized';
 error_log('Unauthorized access: ' . $_SERVER['REMOTE_ADDR']);
-$log_message = $domain . ' ' . date('Y-m-d, h:i:sa') . ' Failed';
+$log_message = $domain . ' ' . date('Y-m-d,h:i:sa') . ' Failed';
 file_put_contents('../accesslog.log', $log_message . PHP_EOL, LOCK_EX | FILE_APPEND);
 exit();

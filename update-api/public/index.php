@@ -163,7 +163,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             </form>
         </div>
     </div>
-    <div class="section">
+    <div class="section" id="delete">
         <h2>Plugins</h2>
         <div id="plugins_table">
             <?php include('plugins-table.php'); ?>
