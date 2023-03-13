@@ -166,12 +166,12 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     <div class="section">
         <h2>Plugins</h2>
         <div id="plugins_table">
-            <?php include('../plugins-table.php'); ?>
+            <?php include('plugins-table.php'); ?>
         </div>
 
         <div class="section">
             <h2>Upload Plugin</h2>
-            <form method="post" enctype="multipart/form-data" name="upload_plugin_form" action="../upload-plugin.php">
+            <form method="post" enctype="multipart/form-data" name="upload_plugin_form" action="upload-plugin.php">
                 <input type="file" name="plugin_file">
                 <input type="submit" name="upload_plugin" value="Upload">
             </form>
@@ -180,7 +180,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         <script>
             function updatePluginsTable() {
                 $.ajax({
-                    url: '../plugins-table.php',
+                    url: 'plugins-table.php',
                     success: function(data) {
                         $('#plugins_table').html(data);
                     },
