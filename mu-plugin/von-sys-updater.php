@@ -8,37 +8,22 @@ Author: Vontainment
 Author URI: https://vontainment.com
 */
 
-// Schedule the update check to run every 5 minutes
-add_action('wp', 'wp_plugin_updater_schedule_check');
+define('ABSPATH', dirname(__FILE__) . '/');
 
-function wp_plugin_updater_schedule_check()
+// Schedule the update check to run every day
+add_action('wp', 'vontmnt_updater_schedule_check');
+
+function vontmnt_updater_schedule_check()
 {
-    if (!wp_next_scheduled('wp_plugin_updater_check_plugins')) {
-        wp_schedule_event(time(), 'daily', 'wp_plugin_updater_check_plugins');
+    if (!wp_next_scheduled('vontmnt_updater_check_plugins')) {
+        wp_schedule_event(time(), 'daily', 'vontmnt_updater_check_plugins');
     }
 }
 
-// Add a custom endpoint for plugin updates
-add_action('init', 'wp_plugin_updater_add_endpoint');
+add_action('vontmnt_updater_check_plugins', 'vontmnt_updater_run_updates');
 
-function wp_plugin_updater_add_endpoint()
-{
-    add_rewrite_rule('^v/update$', 'index.php?wp_plugin_updater_update=1', 'top');
-    add_rewrite_tag('%wp_plugin_updater_update%', '1');
-}
 
-// Check for plugin updates on the custom endpoint
-add_action('template_redirect', 'wp_plugin_updater_check_updates_on_endpoint');
-
-function wp_plugin_updater_check_updates_on_endpoint()
-{
-    if (get_query_var('wp_plugin_updater_update')) {
-        wp_plugin_updater_check_plugin_updates();
-        exit;
-    }
-}
-
-function wp_plugin_updater_check_plugin_updates()
+function vontmnt_updater_run_updates()
 {
     // Define the endpoint URL and key
     define('ENDPOINT', 'https://api.vontainment.com/api.php');
@@ -85,6 +70,7 @@ function wp_plugin_updater_check_plugin_updates()
                 $download_url = $response_data['zip_url'];
 
                 // Download the zip file to the upload directory
+                require_once ABSPATH . 'wp-admin/includes/file.php';
                 $upload_dir      = wp_upload_dir();
                 $tmp_file        = download_url($download_url);
                 $plugin_zip_file = $upload_dir['path'] . '/' . basename($download_url);
