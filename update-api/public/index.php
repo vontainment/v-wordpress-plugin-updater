@@ -22,7 +22,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
     <meta name="robots" content="noindex, nofollow">
     <title>API Admin Page</title>
     <link rel="stylesheet" href="./static/css/index.css">
@@ -31,7 +31,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
 <body>
     <header>
-        <img src="./static/img/logo.png" alt="Lego" width="300px" height="60px">
+        <img src="./static/img/logo.png" alt="Lego" width="200px" height="40px">
         <button class="logout-btn" onclick="location.href='logout.php'">Logout</button>
     </header>
     <div class="section">

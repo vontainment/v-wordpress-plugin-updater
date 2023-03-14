@@ -76,6 +76,9 @@ The second section is plugins. This lets you upload plugins or delete them. As t
 - added access logs to Web GUI.
 - added validation for .zip uploads.
 - Page nolonger must reload on uploads and shows errors in upload box.
+3/14/23
+- Improved admin styles
+- Code Optimizations
 
 ### To-Do List
 

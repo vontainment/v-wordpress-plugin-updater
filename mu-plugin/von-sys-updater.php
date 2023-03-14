@@ -8,39 +8,44 @@ Author: Vontainment
 Author URI: https://vontainment.com
 */
 
-define('ABSPATH', dirname(__FILE__) . '/');
+define('VONTMENT_ENDPOINT', 'https://api.vontainment.com/api.php');
+define('VONTMENT_KEY', '123');
 
 // Schedule the update check to run every day
-add_action('wp', 'vontmnt_updater_schedule_check');
+add_action('wp', 'vontmnt_updater_schedule_updates');
 
-function vontmnt_updater_schedule_check()
+function vontmnt_updater_schedule_updates()
 {
-    if (!wp_next_scheduled('vontmnt_updater_check_plugins')) {
-        wp_schedule_event(time(), 'daily', 'vontmnt_updater_check_plugins');
+    if (!wp_next_scheduled('vontmnt_updater_check_updates')) {
+        wp_schedule_event(time(), 'daily', 'vontmnt_updater_check_updates');
     }
 }
 
-add_action('vontmnt_updater_check_plugins', 'vontmnt_updater_run_updates');
+add_action('vontmnt_updater_check_updates', 'vontmnt_updater_run_updates');
 
 
 function vontmnt_updater_run_updates()
 {
-    // Define the endpoint URL and key
-    define('ENDPOINT', 'https://api.vontainment.com/api.php');
-    define('KEY', '123');
-
     // Get the list of installed plugins
     $plugins = get_plugins();
 
     // Loop through each installed plugin and check for updates
     foreach ($plugins as $plugin_path => $plugin) {
         // Get the plugin slug
-        $plugin_slug       = basename($plugin_path, '.php');
+        $plugin_slug = basename($plugin_path, '.php');
         // Get the installed plugin version
         $installed_version = $plugin['Version'];
 
-        // Construct the API endpoint URL with the key inline
-        $api_url = ENDPOINT . '?domain=' . urlencode(parse_url(site_url(), PHP_URL_HOST)) . '&key=' . urlencode(KEY) . '&plugin=' . urlencode($plugin_slug) . '&version=' . urlencode($installed_version);
+        // Construct the API endpoint URL with the query parameters
+        $api_url = add_query_arg(
+            array(
+                'domain' => urlencode(parse_url(site_url(), PHP_URL_HOST)),
+                'plugin' => urlencode($plugin_slug),
+                'version' => urlencode($installed_version),
+                'key' => VONTMENT_KEY,
+            ),
+            VONTMENT_ENDPOINT
+        );
 
         // Send the request to the API endpoint
         $curl = curl_init();

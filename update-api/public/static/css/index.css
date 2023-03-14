@@ -1,5 +1,10 @@
+html {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 body {
-  max-width: 100%;
+  width: 100%;
   overflow-x: hidden;
   background-color: #f1f1f1;
   background-image: url("../img/background.png");
@@ -54,13 +59,13 @@ header {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .log-columns {
-  margin: 10px;
-  padding: 10px;
-  font-size: 18px;
-  min-width: 17.8%;
+  font-size: 12px;
+  width: 17%;
+  line-break: anywhere;
 }
 
 .log-sub-box {
@@ -73,8 +78,13 @@ header {
   padding: 10px;
 }
 
+.log-sub-box > h3 {
+    margin-top: 0px;
+}
+
 .log-entry {
-  font-size: 16px;
+  font-size: 10px;
+  margin: 0px;
 }
 
 .row {
@@ -112,7 +122,22 @@ input[type="submit"] {
   color: white;
   cursor: pointer;
   padding: 8px 20px;
+  width: 49%;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+.form-group > input[type="submit"] {
+margin-top: 20px;
+width: 100%;
+}
+
+.section > form > input[type="submit"] {
+  margin-top: 20px!important;
+  width: 100% !important;
+}
+
+form > input[type="submit"] {
+  margin-top: 20px;
+  width: 100%!important;
 }
 
 input[type="submit"]:hover {
@@ -179,5 +204,18 @@ th {
     margin-bottom: 5px;
     width: 6em;
     padding: 4px 10px;
+  }
+
+  .form-group>input[type="submit"] {
+  margin-bottom: 20px;
+  }
+
+  form>input[type="submit"] {
+  margin-top: 0px;
+  width: 100% !important;
+  }
+
+  .section>form>input[type="submit"] {
+      margin-bottom: 20px;
   }
 }
