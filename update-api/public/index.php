@@ -6,16 +6,10 @@ Author: Vontainment
 Author URI: https://vontainment.com
 */
 
-// Display the content for logged in users
 session_start();
-
-// Check if user is logged in
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: login.php");
-    exit;
-}
-
+require_once "../app/auth-helper.php";
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en-US">
@@ -32,7 +26,9 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 <body>
     <header>
         <img src="./static/img/logo.png" alt="Lego" width="200px" height="40px">
-        <button class="logout-btn" onclick="location.href='logout.php'">Logout</button>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+            <button class="logout-btn" type="submit" name="logout">Logout</button>
+        </form>
     </header>
     <div class="section">
         <h2>Allowed Hosts</h2>

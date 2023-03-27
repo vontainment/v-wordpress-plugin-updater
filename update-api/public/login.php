@@ -6,24 +6,9 @@ Author: Vontainment
 Author URI: https://vontainment.com
 */
 
-// Include the config file
-require_once '../config.php';
-
-// Check if the user is logged in
 session_start();
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    if (isset($_POST['username']) && isset($_POST['password'])) {
-        // Validate the login
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        if ($username === VALID_USERNAME && $password === VALID_PASSWORD) {
-            $_SESSION['logged_in'] = true;
-            header('Location: index.php');
-            exit();
-        } else {
-            $error_msg = "Invalid username or password.";
-        }
-    }
+require_once '../app/auth-helper.php';
+
 ?>
 
         <!DOCTYPE html>
@@ -55,9 +40,3 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         </body>
 
         </html>
-<?php
-} else {
-    // User is already logged in, redirect them to the homepage
-    header('Location: index.php');
-    exit();
-}
