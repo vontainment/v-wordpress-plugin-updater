@@ -79,6 +79,10 @@ The second section is plugins. This lets you upload plugins or delete them. As t
 3/14/23
 - Improved admin styles
 - Code Optimizations
+4/12/23
+- Fixed plugin table sorting order
+- Cleaned up code
+- Added WAF
 
 ### To-Do List
 

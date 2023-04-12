@@ -19,12 +19,12 @@ require_once '../app/auth-helper.php';
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <meta name="robots" content="noindex, nofollow">
             <title>API Update Admin Login</title>
-            <link rel="stylesheet" href="./static/css/login.css">
+            <link rel="stylesheet" href="./assets/login.css">
         </head>
 
         <body>
             <div class="login-box">
-                <img src="./static/img/logo.png" alt="Logo" class="logo">
+                <img src="./assets/logo.png" alt="Logo" class="logo">
                 <h2>API Admin Login</h2>
                 <form method="post">
                     <label>Username:</label>
