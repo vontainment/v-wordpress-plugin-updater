@@ -29,10 +29,14 @@ if (file_exists($log_file)) {
   echo '<div class="log-row">';
 
   foreach ($log_by_domain as $domain => $entry) {
-    // display the domain name and the latest dated entry for the domain
+    // display the latest dated entry for the domain
     echo '<div class="log-sub-box">';
     echo '<h3>' . $domain . '</h3>';
-    echo '<p class="log-entry">' . $entry['date'] . ' ' . $entry['status'] . '</p>';
+    if ($entry['status'] == 'Failed') {
+      echo '<p class="log-entry" style="color:red;">' . $entry['date'] . ' ' . $entry['status'] . '</p>';
+    } else {
+      echo '<p class="log-entry" style="color:green;">' . $entry['date'] . ' ' . $entry['status'] . '</p>';
+    }
     echo '</div>';
   }
 
