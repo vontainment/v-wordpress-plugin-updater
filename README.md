@@ -1,13 +1,13 @@
 ![Header](./png_20230308_211110_0000.png)
 
 # v-wordpress-plugin-update-api
-WordPress MU-Plugin, PHP api and Web GUI to update plugins from your own server.
+WordPress MU-Plugin, PHP api and Web GUI to update plugins and themes from your own server.
 
 
 ## What This Is
-This is a WordPress mu-plugin (must-use plugin) along with a PHP API and Web GUI that allows you to update your WordPress plugins from your own server.
+This is a WordPress mu-plugin (must-use plugin) along with a PHP API and Web GUI that allows you to update your WordPress plugins and themes from your own server.
 
-The mu-plugin iterates through all installed plugins and sends the domain, security key, plugin slug and version to the API.
+The mu-plugin iterates through all installed plugins and themes and sends the domain, security key, plugin slug and version to the API.
 
 The API compares the domain and key to a list in the HOSTS file. If the domain exists and the key matches, it checks the plugins against files in the /plugins directory, for example, `plugin-slug_1.0.0.zip`. If a new version is available the API sends the filename to the mu-plugin which in return sends a request to downloads.php with the domain, security key and plugin file. The download.php file grabs the plugin file from outside the webroot (for security) and passes it to the mu-plugin to be updated.
 
@@ -52,17 +52,19 @@ But most of all it's just much easier than any other option. You don't need to c
 - Login to WebGUI at yourdomain.com/
 - Add websites domain in format domain.com.
 - Add websites security key that you used in mu-plugin.
-- Prepare updates by renaiming the plugin zip file to plugin-slug_1.1.1.zip (pay attention to the formatting. First is the plug-in slug followed by an _ then the version.
-- Delete any previous versions of plugging updates.
+- Prepare updates by renaiming the plugin zip file to plugin-slug_1.1.1.zip : Pay attention to the formatting. First is the plug-in slug followed by an _ then the version.
+- Now autodeletes any previous versions of plugin updates.
 - Sites will update once daily.
 
 
 ## Using Web GUI
 The Web GUI can have login name and password set in the index.php file.
 
-The Web GUI is set into 2 sections. the first lets you add a host and key. The host is 'domain.com' & the key is 'anything'. You can add, edit or delete hosts and keys here.
+The Web GUI is set into tabbed sections. The first lets you add a host and key. The host is 'domain.com' & the key is 'anything'. You can add, edit or delete hosts and keys here.
 
 The second section is plugins. This lets you upload plugins or delete them. As this is currently setup if you are adding a new update you must remove the old one for this to work. The plugins zip file should be the same as it would in the offical repo except for the naming. The plugin slug refers to the main plugin file before `.php`. The version is in standard format 1.1.1 Take the plug-in folder and add it to a zip archive with the name and the following format plugin-slug_1.2.1.zip.
+
+The Third is for logs.
 
 
 ## Project Status
@@ -83,11 +85,16 @@ The second section is plugins. This lets you upload plugins or delete them. As t
 - Fixed plugin table sorting order
 - Cleaned up code
 - Added WAF
+5/20/23
+- Tabbed interface
+- Upload multible plugins at once
+- Deletes old plugin version on new upload
+- Theme Updates
 
 ### To-Do List
 
 - Polish GUI ( Needs some tweaks).
 - Need to make it more efficient and limit the request sent back and forth.
-- Maybe add themes and mu-plugin updates.
+- Maybe add mu-plugin updates.
 - Right now it logs everything to the debug log in WordPress. Would like to maybe set up its unlocking system that can be viewed from the admin.
 - Move plugin variables to WordPress config.

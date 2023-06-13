@@ -1,13 +1,14 @@
 <?php
+
 /**
- * WP Plugin Update API
+ * WP Theme Update API
  * Version: 1.1
  * Author: Vontainment
  * Author URI: https://vontainment.com
  */
 
 // Include the config file
-require_once ('../config.php');
+require_once('../../config.php');
 
 // Get the domain, key, and file from the query string
 $domain = isset($_GET['domain']) ? $_GET['domain'] : '';
@@ -32,7 +33,7 @@ if ($handle = fopen(HOSTS_ACL, 'r')) {
 
 // If the domain and key are valid, send the file for download
 if ($allowed) {
-    $file_path = PLUGINS_DIR . '/' . $file;
+    $file_path = THEMES_DIR . '/' . $file;
     if (file_exists($file_path)) {
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename="' . basename($file_path) . '"');

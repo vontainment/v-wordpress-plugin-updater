@@ -15,7 +15,7 @@
         $plugins_dir = "../plugins";
         $plugins = glob($plugins_dir . "/*.zip");
 
-        function generateTableRow($plugin, $plugin_name)
+        function generatePluginTableRow($plugin, $plugin_name)
         {
             return '<tr>
         <td>' . $plugin_name . '</td>
@@ -48,7 +48,7 @@
         <tbody>';
             foreach ($plugins_column1 as $plugin) {
                 $plugin_name = basename($plugin);
-                $table_html .= generateTableRow($plugin, $plugin_name);
+                $table_html .= generatePluginTableRow($plugin, $plugin_name);
             }
             $table_html .= '</tbody></table></div><div class="column"><table>
         <thead>
@@ -60,7 +60,7 @@
         <tbody>';
             foreach ($plugins_column2 as $plugin) {
                 $plugin_name = basename($plugin);
-                $table_html .= generateTableRow($plugin, $plugin_name);
+                $table_html .= generatePluginTableRow($plugin, $plugin_name);
             }
             $table_html .= '</tbody></table></div></div>';
         } else {
@@ -75,22 +75,33 @@
 
     <div class="section">
         <h2>Upload Plugin</h2>
-        <form name="upload_plugin_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data">
-            <input type="file" name="plugin_file">
-            <input type="submit" name="upload_plugin" value="Upload">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data" class="dropzone" id="upload_plugin_form">
+            <div class="fallback">
+                <input name="plugin_file[]" type="file" multiple />
+            </div>
         </form>
-        <?php
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-        if (isset($_SESSION['upload_messages'])) {
-            echo '<div class="upload-messages">';
-            foreach ($_SESSION['upload_messages'] as $message) {
-                echo '<p>' . $message . '</p>';
-            }
-            echo '</div>';
-            unset($_SESSION['upload_messages']);
-        }
-        ?>
+        <button class="reload-btn" onclick="window.location.hash = 'PluginsBox'; window.location.reload();">Reload Page</button>
     </div>
+
+
+    <script type="text/javascript">
+        Dropzone.autoDiscover = false;
+
+        $(document).ready(function() {
+            var myDropzone = new Dropzone("#upload_plugin_form", {
+                paramName: "plugin_file[]", // This must match the name attribute of your input tag
+                maxFilesize: 1024, // Size in MB
+                acceptedFiles: '.zip',
+                init: function() {
+                    this.on("addedfile", function(file) {
+                        if (!file.name.match(/\.zip$/)) { // checks file extension
+                            this.removeFile(file);
+                            alert("Only .zip files are allowed.");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
 </div>

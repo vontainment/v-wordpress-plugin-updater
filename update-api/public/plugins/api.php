@@ -8,10 +8,9 @@
  */
 
 // Include the config file
-require_once('../config.php');
+require_once('../../config.php');
 
 // Check if the request method is GET
-
 
     // Get the request parameters
     $domain         = filter_input(INPUT_GET, 'domain', FILTER_SANITIZE_URL);
@@ -34,11 +33,11 @@ require_once('../config.php');
                         if (isset($filename_parts[1]) && version_compare($filename_parts[1], $plugin_version, '>')) {
                             // The plugin version is higher than the installed version, so send the link to the zip file
                             $zip_path = PLUGINS_DIR . '/' . $filename;
-                            $zip_url = 'http://' . $_SERVER['HTTP_HOST'] . '/download.php?domain=' . $domain . '&key=' . $key . '&file=' . $filename;
+                            $zip_url = 'http://' . $_SERVER['HTTP_HOST'] . '/plugins/download.php?domain=' . $domain . '&key=' . $key . '&file=' . $filename;
                             header('Content-Type: application/json');
                             echo json_encode(['zip_url' => $zip_url]);
                             $log_message = $domain . ' ' . date('Y-m-d,h:i:sa') . ' Successful';
-                            file_put_contents('../accesslog.log', $log_message . PHP_EOL, LOCK_EX | FILE_APPEND);
+                            file_put_contents('../../plugin.log', $log_message . PHP_EOL, LOCK_EX | FILE_APPEND);
                             exit();
                         }
                     }
@@ -48,7 +47,7 @@ require_once('../config.php');
                 header('Content-Type: application/json');
                 header('Content-Length: 0');
                 $log_message = $domain . ' ' . date('Y-m-d,h:i:sa') . ' Successful';
-                file_put_contents('../accesslog.log', $log_message . PHP_EOL, LOCK_EX | FILE_APPEND);
+                file_put_contents('../../plugin.log', $log_message . PHP_EOL, LOCK_EX | FILE_APPEND);
                 exit();
             }
         }
@@ -60,5 +59,5 @@ require_once('../config.php');
     echo 'Unauthorized';
     error_log('Unauthorized access: ' . $_SERVER['REMOTE_ADDR']);
     $log_message = $domain . ' ' . date('Y-m-d,h:i:sa') . ' Failed';
-    file_put_contents('../accesslog.log', $log_message . PHP_EOL, LOCK_EX | FILE_APPEND);
+    file_put_contents('../../plugin.log', $log_message . PHP_EOL, LOCK_EX | FILE_APPEND);
     exit();

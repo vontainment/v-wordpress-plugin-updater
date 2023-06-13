@@ -8,32 +8,24 @@ Author: Vontainment
 Author URI: https://vontainment.com
 */
 
-define('VONTMENT_ENDPOINT', 'https://api.vontainment.com/api.php');
-define('VONTMENT_KEY', 'key');    // Define the endpoint URL and key
+define('VONTMENT_PLUGINS', 'https://api.vontainment.com/api.php');
+define('VONTMENT_KEY', '123');
 
 // Schedule the update check to run every day
+add_action('wp', 'vontmnt_plugin_updater_schedule_updates');
 
-function vontmnt_updater_schedule_updates()
+function vontmnt_plugin_updater_schedule_updates()
 {
-    // Check if it's the main site
-    if (is_main_site()) {
-        if (!wp_next_scheduled('vontmnt_updater_check_updates')) {
-            wp_schedule_event(time(), 'daily', 'vontmnt_updater_check_updates');
-        }
+    if (!wp_next_scheduled('vontmnt_plugin_updater_check_updates')) {
+        wp_schedule_event(time(), 'daily', 'vontmnt_plugin_updater_check_updates');
     }
 }
 
-add_action('vontmnt_updater_check_updates', 'vontmnt_updater_run_updates');
+add_action('vontmnt_plugin_updater_check_updates', 'vontmnt_plugin_updater_run_updates');
 
 
-function vontmnt_updater_run_updates()
+function vontmnt_plugin_updater_run_updates()
 {
-
-    // Check if it's the main site
-    if (!is_main_site()) {
-        return;
-    }
-
     // Get the list of installed plugins
     $plugins = get_plugins();
 
@@ -52,7 +44,7 @@ function vontmnt_updater_run_updates()
                 'version' => urlencode($installed_version),
                 'key' => VONTMENT_KEY,
             ),
-            VONTMENT_ENDPOINT
+            VONTMENT_PLUGINS
         );
 
         // Send the request to the API endpoint
