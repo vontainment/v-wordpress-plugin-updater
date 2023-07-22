@@ -1,0 +1,81 @@
+/* ================================================
+    RESPONSIVE STYLES
+================================================ */
+
+@media (max-width: 767px) {
+  body {
+    margin: 0 0 70px;
+  }
+
+  /* Logo Styles */
+  .logo img {
+    width: 250px;
+  }
+
+  .content-box {
+    border: 2px solid #fff;
+    margin: 0;
+    padding: 0;
+  }
+
+  .content-box .section {
+    margin-top: 40px;
+    max-width: unset;
+  }
+
+  .entry-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .entry-form input {
+    width: 100%;
+  }
+
+  .hosts-domain,
+  .hosts-key {
+    width: 90%
+  }
+
+  .hosts-submit {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+
+  #domain,
+  #key {
+    width: 100%;
+  }
+
+  .plupload.section,
+  .thupload.section {
+    flex-direction: column;
+    gap: unset;
+  }
+
+  #upload-container,
+  #message-container {
+    width: 100%;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+
+  table tr th:last-child,
+  table tr td:last-child {
+    width: 100px;
+  }
+
+  .logout-btn {
+    margin: 10px 0 10px auto;
+  }
+
+  .log-sub-box {
+    width: 100%;
+  }
+}

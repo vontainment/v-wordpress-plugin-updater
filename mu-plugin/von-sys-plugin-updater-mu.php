@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: WP Plugin Updater
+Plugin Name: WP Plugin Updater MU
 Plugin URI: https://vontainment.com
 Description: This plugin updates your WordPress plugins.
-Version: 1.2.0
+Version: 1.0.0
 Author: Vontainment
 Author URI: https://vontainment.com
 */
@@ -22,6 +22,10 @@ add_action('vontmnt_plugin_updater_check_updates', 'vontmnt_plugin_updater_run_u
 
 function vontmnt_plugin_updater_run_updates()
 {
+    // Check if it's the main site
+    if (!is_main_site()) {
+        return;
+    }
     // Get the list of installed plugins
     $plugins = get_plugins();
 

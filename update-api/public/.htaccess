@@ -1,0 +1,15 @@
+RewriteEngine On
+
+# redirect '/' to 'hosts' for external requests only
+RewriteCond %{THE_REQUEST} \s/\s [NC]
+RewriteRule ^$ /home [L,R=301]
+
+# redirect '/index.php' to 'hosts' for external requests only
+RewriteCond %{THE_REQUEST} \s/index\.php\s [NC]
+RewriteRule ^index\.php$ /home [L,R=301]
+
+# Internally rewrite hosts, /users, /accounts, /gallery to index.php?page=hosts, index.php?page=gallery, index.php?page=users, and index.php?page=accounts
+RewriteCond %{REQUEST_URI} ^/(home|plupdate|thupdate|logs)$
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^/]*)$ /index.php?page=$1 [L]

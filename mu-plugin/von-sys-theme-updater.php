@@ -8,9 +8,6 @@ Author: Vontainment
 Author URI: https://vontainment.com
 */
 
-define('VONTMENT_THEMES', 'https://api.vontainment.com/api.php');
-define('VONTMENT_KEY', '123');
-
 // Schedule the update check to run every day
 add_action('wp', 'vontmnt_theme_updater_schedule_updates');
 

@@ -1,3 +1,4 @@
+
 <?php
 
 /**
@@ -9,17 +10,26 @@
 
 // Include the config file
 require_once('../../config.php');
+require_once '../../lib/waf-lib.php';
 
-// Check if the request method is GET
-
+$ip = $_SERVER['REMOTE_ADDR'];
+if (is_blacklisted($ip)) {
+    // Stop the script and show an error if the IP is blacklisted
+    http_response_code(403); // Optional: Set HTTP status code to 403 Forbidden
+    echo "Your IP address has been blacklisted. If you believe this is an error, please contact us.";
+    exit();
+} elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    foreach ($_GET as $postvalue => $value) {
+        $_GET[$postvalue] = sanitize_input($value);
+    }
     // Get the request parameters
-    $domain         = filter_input(INPUT_GET, 'domain', FILTER_SANITIZE_URL);
-    $key            = filter_input(INPUT_GET, 'key');
-    $plugin_slug    = filter_input(INPUT_GET, 'plugin');
-    $plugin_version = filter_input(INPUT_GET, 'version');
+    $domain = $_GET['domain'] ?? '';
+    $key = $_GET['key'] ?? '';
+    $plugin_slug = $_GET['plugin'] ?? '';
+    $plugin_version = $_GET['version'] ?? '';
 
     // Check if the domain and key exist in the HOSTS file
-    if ($host_file = @fopen(HOSTS_ACL, 'r')) {
+    if ($host_file = @fopen(HOSTS_ACL . 'HOSTS', 'r')) {
         while (!feof($host_file)) {
             $line = trim(fgets($host_file));
             list($host, $host_key) = explode(' ', $line);
@@ -37,7 +47,7 @@ require_once('../../config.php');
                             header('Content-Type: application/json');
                             echo json_encode(['zip_url' => $zip_url]);
                             $log_message = $domain . ' ' . date('Y-m-d,h:i:sa') . ' Successful';
-                            file_put_contents('../../plugin.log', $log_message . PHP_EOL, LOCK_EX | FILE_APPEND);
+                            file_put_contents(LOG_DIR . '/plugin.log', $log_message . PHP_EOL, LOCK_EX | FILE_APPEND);
                             exit();
                         }
                     }
@@ -47,17 +57,20 @@ require_once('../../config.php');
                 header('Content-Type: application/json');
                 header('Content-Length: 0');
                 $log_message = $domain . ' ' . date('Y-m-d,h:i:sa') . ' Successful';
-                file_put_contents('../../plugin.log', $log_message . PHP_EOL, LOCK_EX | FILE_APPEND);
+                file_put_contents(LOG_DIR . '/plugin.log', $log_message . PHP_EOL, LOCK_EX | FILE_APPEND);
                 exit();
             }
         }
         fclose($host_file);
     }
-
+    update_failed_attempts($ip);
     // The domain and key pair does not exist in the HOSTS file, log the unauthorized access and return a 401 Unauthorized response
     header('HTTP/1.1 401 Unauthorized');
     echo 'Unauthorized';
     error_log('Unauthorized access: ' . $_SERVER['REMOTE_ADDR']);
     $log_message = $domain . ' ' . date('Y-m-d,h:i:sa') . ' Failed';
-    file_put_contents('../../plugin.log', $log_message . PHP_EOL, LOCK_EX | FILE_APPEND);
+    file_put_contents(LOG_DIR . '/plugin.log', $log_message . PHP_EOL, LOCK_EX | FILE_APPEND);
     exit();
+} else {
+    exit();
+}

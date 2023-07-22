@@ -1,0 +1,135 @@
+/* ================================================
+APP STYLES
+================================================ */
+.content-box {
+  background-color: #fff;
+  min-height: 100vh;
+  padding: 20px 10px 40px 10px;
+}
+
+.section h2 {
+  margin-left: 10px;
+}
+
+.home.section {
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  margin: 40px 10px 10px;
+  border: 2px solid #66cc33;
+  box-shadow: 1.95px 1.95px 2.6px rgba(0, 0, 0, 0.15);
+}
+
+.entry-form {
+  align-items: flex-end;
+  display: flex;
+  margin: 10px;
+}
+
+.entry-form .form-group {
+  margin: 10px;
+}
+
+.hosts-domain, .hosts-key {
+  width: 90%
+}
+
+.hosts-submit {
+  width: 48%;
+}
+
+#domain, #key {
+  width: 90%;
+}
+
+.plupload.section, .thupload.section {
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  max-width: 100%;
+  margin: 40px 10px 10px;
+  border: 2px solid #66cc33;
+  box-shadow: 1.95px 1.95px 2.6px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.pl-submit, .th-submit {
+  width: 100%;
+}
+
+#upload-container {
+  width: 60%;
+}
+
+#upload-container form {
+  margin: 20px;
+}
+
+.dz-button {
+  box-shadow: unset;
+}
+
+.reload-btn {
+  margin: 20px;;
+}
+
+#message-container {
+  width: 40%;
+}
+
+#message-container > div {
+  margin-left: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.column {
+  flex: 50%;
+}
+
+.row {
+  display: flex;
+}
+
+.log-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.log-sub-box {
+  border: 2px solid #66cc33;
+  box-shadow: 1.95px 1.95px 2.6px rgba(0, 0, 0, 0.15);
+  margin: 10px;
+  padding: 10px;
+  width: 14%;
+}
+
+.log-sub-box>h3 {
+  margin-top: 0;
+}
+
+.log-entry {
+  font-size: 10px;
+  margin: 0;
+}
+
+.dropzone {
+  border: 2px solid #0366d6;
+  box-shadow: 1.95px 1.95px 2.6px rgba(0, 0, 0, 0.15);
+}
