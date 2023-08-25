@@ -3,7 +3,7 @@
 Theme Name: WP Theme Updater
 Theme URI: https://vontainment.com
 Description: This theme updates your WordPress themes.
-Version: 1.0.0
+Version: 1.2.0
 Author: Vontainment
 Author URI: https://vontainment.com
 */
@@ -20,77 +20,83 @@ function vontmnt_theme_updater_schedule_updates()
 
 add_action('vontmnt_theme_updater_check_updates', 'vontmnt_theme_updater_run_updates');
 
+function vontmnt_construct_theme_api_url($theme)
+{
+    $theme_slug = $theme->get_stylesheet();
+    $installed_version = $theme->get('Version');
+
+    return add_query_arg(
+        array(
+            'action' => 'update-themes',
+            'domain' => urlencode(parse_url(site_url(), PHP_URL_HOST)),
+            'theme' => urlencode($theme_slug),
+            'version' => urlencode($installed_version),
+            'key' => VONTMENT_KEY,
+        ),
+        VONTMENT_THEMES
+    );
+}
+
+function vontmnt_send_curl_request($api_url)
+{
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $api_url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_SSL_VERIFYHOST => false, // Consider enabling this in a production environment
+        CURLOPT_SSL_VERIFYPEER => false  // Consider enabling this in a production environment
+    ));
+
+    $response = curl_exec($curl);
+    $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    curl_close($curl);
+
+    return array($response, $http_code);
+}
+
+function vontmnt_download_and_install_theme($response_data)
+{
+    if (isset($response_data['zip_url'])) {
+        $download_url = $response_data['zip_url'];
+
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+        $upload_dir = wp_upload_dir();
+        $tmp_file = download_url($download_url);
+        $theme_zip_file = $upload_dir['path'] . '/' . basename($download_url);
+
+        rename($tmp_file, $theme_zip_file);
+
+        WP_Filesystem();
+        $unzipfile = unzip_file($theme_zip_file, get_theme_root());
+
+        if (is_wp_error($unzipfile)) {
+            error_log('Error unzipping theme file: ' . $unzipfile->get_error_message());
+        } else {
+            unlink($theme_zip_file);
+            return true;
+        }
+    }
+    return false;
+}
+
 function vontmnt_theme_updater_run_updates()
 {
-    // Get the list of installed themes
     $themes = wp_get_themes();
 
-    // Loop through each installed theme and check for updates
     foreach ($themes as $theme) {
-        // Get the theme slug
+        $api_url = vontmnt_construct_theme_api_url($theme);
+        list($response, $http_code) = vontmnt_send_curl_request($api_url);
+
         $theme_slug = $theme->get_stylesheet();
-        // Get the installed theme version
-        $installed_version = $theme->get('Version');
-
-        // Construct the API endpoint URL with the query parameters
-        $api_url = add_query_arg(
-            array(
-                'domain' => urlencode(parse_url(site_url(), PHP_URL_HOST)),
-                'theme' => urlencode($theme_slug),
-                'version' => urlencode($installed_version),
-                'key' => VONTMENT_KEY,
-            ),
-            VONTMENT_THEMES
-        );
-
-        // Send the request to the API endpoint
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => $api_url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_SSL_VERIFYHOST => false,
-            CURLOPT_SSL_VERIFYPEER => false
-        ));
-        $response  = curl_exec($curl);
-        $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        curl_close($curl);
-
-        // Get the response body
-        $response_body = $response;
-
-        // Check if the API returned a theme update
         if ($http_code == 204) {
             error_log("$theme_slug : has no updates");
         } elseif ($http_code == 401) {
             error_log("You are not authorized for the Vontainment API");
-        } elseif (!empty($response_body)) {
-            $response_data = json_decode($response_body, true);
-
-            if (isset($response_data['zip_url'])) {
-                $download_url = $response_data['zip_url'];
-
-                // Download the zip file to the upload directory
-                require_once ABSPATH . 'wp-admin/includes/file.php';
-                $upload_dir      = wp_upload_dir();
-                $tmp_file        = download_url($download_url);
-                $theme_zip_file = $upload_dir['path'] . '/' . basename($download_url);
-
-                // Move the downloaded file to the themes directory
-                rename($tmp_file, $theme_zip_file);
-
-                // Unzip the theme zip file
-                WP_Filesystem();
-                $unzipfile = unzip_file($theme_zip_file, get_theme_root());
-
-                // Check if the unzip was successful
-                if (is_wp_error($unzipfile)) {
-                    error_log('Error unzipping theme file: ' . $unzipfile->get_error_message());
-                } else {
-                    // Delete the theme zip file
-                    unlink($theme_zip_file);
-                    error_log("$theme_slug : Was updated");
-                }
+        } elseif (!empty($response)) {
+            $response_data = json_decode($response, true);
+            if (vontmnt_download_and_install_theme($response_data)) {
+                error_log("$theme_slug : Was updated");
             } else {
                 error_log("$theme_slug : Is up-to-date");
             }
