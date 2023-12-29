@@ -38,7 +38,6 @@ require_once '../lib/auth-lib.php';
         <?php if (isset($error_msg)) : ?>
             <div id="error-msg"><?php echo $error_msg; ?></div>
         <?php endif; ?>
-
     </div>
 </body>
 
